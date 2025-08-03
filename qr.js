@@ -10,20 +10,28 @@ const fs = require("fs-extra");
 const { Boom } = require("@hapi/boom");
 
 const MESSAGE = process.env.MESSAGE || `
-*SESSION GENERATED SUCCESSFULY* ✅
+*🎉 SESSION GENERATED SUCCESSFULLY! ✅*
 
-*Gɪᴠᴇ ᴀ ꜱᴛᴀʀ ᴛᴏ ʀᴇᴘᴏ ꜰᴏʀ ᴄᴏᴜʀᴀɢᴇ* 🌟
-https://github.com/GuhailTechInfo/MEGA-AI
+*💪 Empowering Your Experience with EXPLORE-XMD Bot*
 
-*Sᴜᴘᴘᴏʀᴛ Gʀᴏᴜᴘ ꜰᴏʀ ϙᴜᴇʀʏ* 💭
-https://t.me/Global_TechInfo
-https://whatsapp.com/channel/0029VagJIAr3bbVBCpEkAM07
+*🌟 Show your support by giving our repo a star! 🌟*
+🔗 https://github.com/explore-md/---
 
-*Yᴏᴜ-ᴛᴜʙᴇ ᴛᴜᴛᴏʀɪᴀʟꜱ* 🪄 
-https://youtube.com/GlobalTechInfo
+*💭 Need help? Join our support groups:*
+📢 💬
+https://whatsapp.com/channel/0029Vb4HUnJAjPXOWnELU82J
 
-*MEGA-AI--WHATSAPP* 🥀
-`;
+*📚 Learn & Explore More with Tutorials:*
+🪄 YouTube Channel https://www.youtube.com/@sibongakonkethalente98
+
+*🥀 Powered by Reddragon-XMD Bot & Explore Tech Inc 🥀*
+*Together, we build the future of automation! 🚀*
+
+_________________________________________________
+
+Use your Session ID Above to Deploy your Bot.
+Check on YouTube Channel for Deployment Procedure(Ensure you have Github Account and Billed Heroku Account First.)
+Don't Forget To Give Star⭐ To My Repo`;
 
 if (fs.existsSync('./auth_info_baileys')) {
   fs.emptyDirSync(__dirname + '/auth_info_baileys');
