@@ -1,30 +1,25 @@
-const { exec } = require("child_process");
-const uploadToPastebin = require('./Paste');  // Make sure the function is correctly imported
 const express = require('express');
+const fs = require('fs-extra');
+const { exec } = require("child_process");
 let router = express.Router();
 const pino = require("pino");
-
-let { toBuffer } = require("qrcode");
-const path = require('path');
-const fs = require("fs-extra");
 const { Boom } = require("@hapi/boom");
-
 const MESSAGE = process.env.MESSAGE || `
 *🎉 SESSION GENERATED SUCCESSFULLY! ✅*
 
-*💪 Empowering Your Experience with EXPLORE-XMD Bot*
+*💪 Empowering Your Experience with BLADE-XMD Bot*
 
 *🌟 Show your support by giving our repo a star! 🌟*
-🔗 https://github.com/explore-md/---
+🔗 https://github.com/Thugkeedxxx/BLADE-XMD-V1
 
 *💭 Need help? Join our support groups:*
 📢 💬
-https://whatsapp.com/channel/0029Vb4HUnJAjPXOWnELU82J
+https://whatsapp.com/channel/0029VbB7a9v6LwHqDUERef0M
 
 *📚 Learn & Explore More with Tutorials:*
-🪄 YouTube Channel https://www.youtube.com/@sibongakonkethalente98
+🪄 YouTube Channel https://www.youtube.com/@thugkeed_sa
 
-*🥀 Powered by Reddragon-XMD Bot & Explore Tech Inc 🥀*
+* ➪ Powered by 𝘛𝘏𝘜𝘎𝘒𝘌𝘌𝘋 𝘛𝘌𝘊𝘏🍁*
 *Together, we build the future of automation! 🚀*
 
 _________________________________________________
@@ -33,25 +28,36 @@ Use your Session ID Above to Deploy your Bot.
 Check on YouTube Channel for Deployment Procedure(Ensure you have Github Account and Billed Heroku Account First.)
 Don't Forget To Give Star⭐ To My Repo`;
 
+const uploadToPastebin = require('./Paste');  // Assuming you have a function to upload to Pastebin
+const {
+    default: makeWASocket,
+    useMultiFileAuthState,
+    delay,
+    makeCacheableSignalKeyStore,
+    Browsers,
+    DisconnectReason
+} = require("@whiskeysockets/baileys");
+
+// Ensure the directory is empty when the app starts
 if (fs.existsSync('./auth_info_baileys')) {
-  fs.emptyDirSync(__dirname + '/auth_info_baileys');
+    fs.emptyDirSync(__dirname + '/auth_info_baileys');
 }
 
 router.get('/', async (req, res) => {
-  const { default: SuhailWASocket, useMultiFileAuthState, Browsers, delay, DisconnectReason, makeInMemoryStore } = require("@whiskeysockets/baileys");
-  const store = makeInMemoryStore({ logger: pino().child({ level: 'silent', stream: 'store' }) });
+    let num = req.query.number;
 
-  async function SUHAIL() {
-    const { state, saveCreds } = await useMultiFileAuthState(__dirname + '/auth_info_baileys');
-
-    try {
-      let Smd = SuhailWASocket({
-        printQRInTerminal: false,
-        logger: pino({ level: "silent" }),
-        browser: Browsers.macOS("Desktop"),
-        auth: state
-      });
-
+    async function SUHAIL() {
+        const { state, saveCreds } = await useMultiFileAuthState(`./auth_info_baileys`);
+        try {
+            let Smd = makeWASocket({
+                auth: {
+                    creds: state.creds,
+                    keys: makeCacheableSignalKeyStore(state.keys, pino({ level: "fatal" }).child({ level: "fatal" })),
+                },
+                printQRInTerminal: false,
+                logger: pino({ level: "fatal" }).child({ level: "fatal" }),
+                browser: Browsers.macOS("Safari"),
+            });
       Smd.ev.on("connection.update", async (s) => {
         const { connection, lastDisconnect, qr } = s;
 
