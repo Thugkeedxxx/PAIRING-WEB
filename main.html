@@ -1,130 +1,132 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BLADE-XMD</title>
   <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
+      font-family: 'Courier New', Courier, monospace;
+      color: #ff69b4;
+      background: #000;
+      overflow: hidden;
+      position: relative;
+      height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      height: 100vh;
-      margin: 0;
-      font-family: 'Roboto', 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #4e9f3d, #34d7b7, #55c7f7);
-      background-size: 300% 300%;
-      animation: gradientAnimation 10s ease infinite;
     }
 
-    @keyframes gradientAnimation {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+    /* Background hacker effect */
+    .hacker-bg {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(255, 105, 180, 0.05),
+        rgba(255, 105, 180, 0.05) 1px,
+        transparent 1px,
+        transparent 2px
+      );
+      z-index: 0;
+      pointer-events: none;
+      animation: scroll 10s linear infinite;
+    }
+
+    @keyframes scroll {
+      0% { background-position-y: 0; }
+      100% { background-position-y: 100%; }
     }
 
     h1 {
-      color: white;
       font-size: 3.5rem;
-      margin-bottom: 40px;
-      text-align: center;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      font-weight: 700;
-      text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+      text-shadow: 0 0 10px #ff69b4, 0 0 20px #ff69b4;
+      margin-bottom: 20px;
+      z-index: 2;
+      animation: flicker 2s infinite;
+    }
+
+    @keyframes flicker {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.6; }
+    }
+
+    .typing {
+      font-size: 1.3rem;
+      white-space: nowrap;
+      border-right: 3px solid #ff69b4;
+      overflow: hidden;
+      width: 0;
+      animation: typing 4s steps(40, end) forwards, blink .75s step-end infinite;
+      z-index: 2;
+      margin-bottom: 30px;
+    }
+
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+
+    @keyframes blink {
+      50% { border-color: transparent; }
+    }
+
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      z-index: 2;
     }
 
     .btn {
-      width: 250px;
-      padding: 15px 25px;
-      margin: 10px;
-      background: transparent;
-      border-radius: 25px;
-      border: 2px solid #ffffff;
-      font-size: 18px;
+      padding: 12px 25px;
+      background-color: #ff69b4;
+      color: black;
       font-weight: bold;
-      text-transform: uppercase;
-      color: white;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
+      border: none;
+      border-radius: 8px;
       cursor: pointer;
-      transition: all 0.4s ease;
-      box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
-    }
-
-    /* Add shine effect on hover */
-    .btn::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      height: 200%;
-      width: 200%;
-      background: rgba(255, 255, 255, 0.3);
-      transform: skewX(45deg);
-      transition: all 0.5s;
-    }
-
-    .btn:hover::before {
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 100%;
+      text-decoration: none;
+      box-shadow: 0 0 10px #ff69b4, 0 0 20px #ff69b4;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
     .btn:hover {
-      background-color: #ffffff;
-      color: #333;
-      box-shadow: 0 10px 25px rgba(255, 255, 255, 0.5);
       transform: scale(1.05);
+      box-shadow: 0 0 15px #ff1493, 0 0 25px #ff1493;
     }
 
-    .btn:active {
-      filter: brightness(0.9);
-      transform: scale(0.98);
+    footer {
+      position: absolute;
+      bottom: 10px;
+      color: #ff69b4;
+      font-size: 0.9rem;
+      z-index: 2;
     }
-
-    /* Responsive Design */
-    @media (max-width: 600px) {
-      h1 {
-        font-size: 2.2rem;
-      }
-      .btn {
-        width: 80%;
-        padding: 12px 20px;
-        font-size: 16px;
-      }
-    }
-
-    @media (min-width: 600px) and (max-width: 1024px) {
-      h1 {
-        font-size: 2.8rem;
-      }
-      .btn {
-        width: 220px;
-        padding: 14px 22px;
-      }
-    }
-
-    @media (min-width: 1024px) {
-      h1 {
-        font-size: 3.5rem;
-      }
-      .btn {
-        width: 250px;
-        padding: 15px 25px;
-      }
-    }
-
   </style>
 </head>
 <body>
+  <div class="hacker-bg"></div>
 
-  <button onclick="window.open(`/qr`)" class="btn">QR Code</button>
-  <button onclick="window.open(`/pair`)" class="btn">Pair Code</button>
-  <button onclick="window.open(`https://github.com/explore-md`)" class="btn">GitHub</button>
-  <button onclick="window.open(`https://whatsapp.com/channel/0029Vb4HUnJAjPXOWnELU82J`)" class="btn">WhatsApp</button>
+  <h1>BLADE-XMD</h1>
+  <div class="typing">System Loading... Accessing Hacker Terminal 💀</div>
 
+  <div class="btn-group">
+    <button onclick="window.open('/qr')" class="btn">QR Code</button>
+    <button onclick="window.open('/pair')" class="btn">Pair Code</button>
+    <button onclick="window.open('https://github.com/thugkeedxxx/BLADE-XMD')" class="btn">GitHub</button>
+    <button onclick="window.open('https://whatsapp.com/channel/0029VbB7a9v6LwHqDUERef0M')" class="btn">WhatsApp</button>
+  </div>
+
+  <footer>Created by THUGKEED 💻</footer>
 </body>
 </html>
