@@ -7,19 +7,19 @@ const { Boom } = require("@hapi/boom");
 const MESSAGE = process.env.MESSAGE || `
 *🎉 SESSION GENERATED SUCCESSFULLY! ✅*
 
-*💪 Empowering Your Experience with EXPLORE-XMD Bot*
+*💪 Empowering Your Experience with BLADE-XMD Bot*
 
 *🌟 Show your support by giving our repo a star! 🌟*
-🔗 https://github.com/nomfundokagwe/Explore-md-V1
+🔗 https://github.com/Thugkeedxxx/BLADE-XMD-V1
 
 *💭 Need help? Join our support groups:*
 📢 💬
-https://whatsapp.com/channel/0029Vb4HUnJAjPXOWnELU82J
+https://whatsapp.com/channel/0029VbB7a9v6LwHqDUERef0M
 
 *📚 Learn & Explore More with Tutorials:*
-🪄 YouTube Channel https://www.youtube.com/@sibongakonkethalente98
+🪄 YouTube Channel https://www.youtube.com/@thugkeed_sa
 
-*🥀 Powered by Reddragon-XMD Bot & Explore Tech Inc 🥀*
+* ➪ Powered by 𝘛𝘏𝘜𝘎𝘒𝘌𝘌𝘋 𝘛𝘌𝘊𝘏🍁*
 *Together, we build the future of automation! 🚀*
 
 _________________________________________________
