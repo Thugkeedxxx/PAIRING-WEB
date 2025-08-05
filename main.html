@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>BLADE-XMD</title>
   <style>
     :root {
@@ -34,17 +34,29 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      cursor: crosshair;
       position: relative;
       transition: 0.4s;
+    }
+
+    canvas#snow {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    h1, .typing, .btn, .cube, .music, .terminal, .social, footer {
+      z-index: 2;
+      position: relative;
     }
 
     h1 {
       font-size: 3rem;
       text-shadow: 0 0 10px var(--text-color), 0 0 20px var(--text-color);
       animation: flicker 1.5s infinite;
-      margin-bottom: 20px;
-      z-index: 2;
     }
 
     @keyframes flicker {
@@ -58,7 +70,6 @@
       overflow: hidden;
       border-right: 2px solid var(--text-color);
       animation: typing 4s steps(40) 1s forwards, blink .75s step-end infinite;
-      z-index: 2;
     }
 
     @keyframes typing {
@@ -72,10 +83,9 @@
 
     .btn {
       display: flex;
+      flex-wrap: wrap;
       gap: 20px;
       margin-top: 40px;
-      z-index: 2;
-      flex-wrap: wrap;
       justify-content: center;
     }
 
@@ -86,7 +96,7 @@
       text-decoration: none;
       font-weight: bold;
       border-radius: 8px;
-      transition: background 0.3s, transform 0.2s;
+      transition: 0.3s ease-in-out;
       border: none;
       cursor: pointer;
     }
@@ -94,14 +104,6 @@
     a.button:hover, button.button:hover {
       background: var(--button-hover);
       transform: scale(1.05);
-    }
-
-    footer {
-      position: absolute;
-      bottom: 10px;
-      font-size: 0.8rem;
-      z-index: 2;
-      color: var(--text-color);
     }
 
     .cube {
@@ -139,40 +141,150 @@
       to   { transform: rotateX(360deg) rotateY(360deg); }
     }
 
-    .glitch h1 {
-      animation: glitchy 0.3s infinite;
+    .music {
+      margin-top: 30px;
     }
 
-    @keyframes glitchy {
-      0% { transform: translate(1px, -1px); }
-      20% { transform: translate(-1px, 2px); }
-      40% { transform: translate(2px, 1px); }
-      60% { transform: translate(-2px, -1px); }
-      80% { transform: translate(1px, -2px); }
-      100% { transform: translate(0, 0); }
+    .music audio {
+      width: 200px;
+      outline: none;
+      border: 2px solid var(--text-color);
+      border-radius: 10px;
     }
 
-    .trail {
-      width: 10px;
-      height: 10px;
-      background: var(--text-color);
-      border-radius: 50%;
+    .terminal {
+      margin-top: 40px;
+      padding: 10px;
+      background: #111;
+      border: 1px solid #444;
+      width: 90%;
+      max-width: 500px;
+      height: 120px;
+      overflow-y: auto;
+      font-size: 0.9rem;
+    }
+
+    .social {
+      margin-top: 20px;
+      display: flex;
+      gap: 15px;
+    }
+
+    .social a {
+      color: var(--text-color);
+      text-decoration: none;
+      font-size: 1.5rem;
+      transition: 0.3s;
+    }
+
+    .social a:hover {
+      transform: scale(1.2);
+      color: var(--button-hover);
+    }
+
+    footer {
       position: absolute;
-      pointer-events: none;
-      opacity: 0.5;
-      filter: blur(4px);
-      animation: fadeout 0.8s forwards;
+      bottom: 10px;
+      font-size: 0.8rem;
+      color: var(--text-color);
     }
 
-    @keyframes fadeout {
-      to { opacity: 0; transform: scale(0.2); }
+    /* Loader Overlay */
+    #loader {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: var(--bg-color);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      flex-direction: column;
+      user-select: none;
+      transition: opacity 0.5s ease;
+    }
+
+    /* Glitchy Text for Loader */
+    #loader h1 {
+      font-size: 3rem;
+      color: var(--text-color);
+      position: relative;
+      animation: flicker 1.5s infinite;
+      user-select: none;
+    }
+
+    /* Glitch effect */
+    #loader h1::before,
+    #loader h1::after {
+      content: "BLADE-XMD";
+      position: absolute;
+      left: 0;
+      width: 100%;
+      overflow: hidden;
+      clip: rect(0, 900px, 0, 0);
+    }
+
+    #loader h1::before {
+      animation: glitchTop 1s infinite linear alternate-reverse;
+      top: -2px;
+      left: 2px;
+      color: #ff00aa;
+      text-shadow: -2px 0 #ff00aa;
+      clip: rect(0, 900px, 45px, 0);
+    }
+
+    #loader h1::after {
+      animation: glitchBottom 1.2s infinite linear alternate-reverse;
+      top: 2px;
+      left: -2px;
+      color: #00ffaa;
+      text-shadow: -2px 0 #00ffaa;
+      clip: rect(45px, 900px, 90px, 0);
+    }
+
+    @keyframes glitchTop {
+      0% {
+        clip: rect(0, 900px, 45px, 0);
+        transform: translate(0);
+      }
+      50% {
+        clip: rect(10px, 900px, 55px, 0);
+        transform: translate(-3px, -2px);
+      }
+      100% {
+        clip: rect(0, 900px, 45px, 0);
+        transform: translate(0);
+      }
+    }
+
+    @keyframes glitchBottom {
+      0% {
+        clip: rect(45px, 900px, 90px, 0);
+        transform: translate(0);
+      }
+      50% {
+        clip: rect(50px, 900px, 75px, 0);
+        transform: translate(3px, 2px);
+      }
+      100% {
+        clip: rect(45px, 900px, 90px, 0);
+        transform: translate(0);
+      }
     }
   </style>
 </head>
 <body onclick="toggleGlitch()" id="body">
 
+  <!-- Loader Overlay -->
+  <div id="loader">
+    <h1>BLADE-XMD</h1>
+  </div>
+
+  <!-- Animated Snow Background -->
+  <canvas id="snow"></canvas>
+
   <h1>BLADE-XMD</h1>
-  <div class="typing">Welcome to THUGKEED TECH • Hacker Engine Active</div>
+  <div class="typing">𝚆𝙴𝙻𝙲𝙾𝙼𝙴 𝚃𝙾 𝚃𝙷𝚄𝙶𝙺𝙴𝙴𝙳 𝚃𝙴𝙲𝙷 𝚂𝙸𝚃𝙴</div>
 
   <div class="btn">
     <button class="button" onclick="window.open('/qr')">QR Code</button>
@@ -180,41 +292,118 @@
     <a class="button" href="https://whatsapp.com/channel/0029VbB7a9v6LwHqDUERef0M" target="_blank">WhatsApp</a>
     <a class="button" href="https://github.com/thugkeedxxx/BLADE-XMD" target="_blank">GitHub</a>
     <button class="button" onclick="toggleTheme()">Theme</button>
+    <button class="button" onclick="window.location.reload()">Refresh</button>
   </div>
 
   <div class="cube">
-    <div class="face front">XMD</div>
-    <div class="face back">THUG</div>
+    <div class="face front">☯︎</div>
+    <div class="face back">❄︎</div>
     <div class="face right">TECH</div>
-    <div class="face left">2025</div>
+    <div class="face left">666</div>
     <div class="face top">MD</div>
     <div class="face bottom">AI</div>
+  </div>
+
+  <div class="music">
+    <audio controls autoplay loop>
+      <source src="https://files.catbox.moe/aym9ni.mp3" type="audio/mp3"/>
+      Your browser does not support the audio element.
+    </audio>
+  </div>
+
+  <div class="terminal" id="terminal">
+    <div>> Welcome to BLADE-XMD Terminal</div>
+    <div>> Type `help` for  commands...</div>
+  </div>
+
+  <div class="social">
+    <a href="https://github.com/thugkeedxxx" target="_blank"></a>
+    <a href="https://whatsapp.com/channel/0029VbB7a9v6LwHqDUERef0M" target="_blank"></a>
+    <a href="https://vercel.com" target="_blank"></a>
   </div>
 
   <footer>Click anywhere to toggle glitch • THUGKEED ©</footer>
 
   <script>
+    // Theme Toggle
+    function toggleTheme() {
+      document.body.classList.toggle('pink');
+    }
+
     // Glitch Toggle
     function toggleGlitch() {
       document.getElementById('body').classList.toggle('glitch');
     }
 
-    // Cursor Trail
-    document.addEventListener('mousemove', (e) => {
-      const trail = document.createElement('div');
-      trail.className = 'trail';
-      trail.style.left = `${e.pageX}px`;
-      trail.style.top = `${e.pageY}px`;
-      document.body.appendChild(trail);
-      setTimeout(() => trail.remove(), 800);
-    });
+    // Fake Terminal Auto Messages
+    const messages = [
+      "> Loading modules...",
+      "> Connecting to THUGKEED AI...",
+      "> Initializing hacking interface...",
+      "> Type `connect -xmd` to continue...",
+      "> Access Granted ✓"
+    ];
+    let index = 0;
+    const term = document.getElementById('terminal');
 
-    // Theme Toggle
-    function toggleTheme() {
-      document.body.classList.toggle('pink');
+    setInterval(() => {
+      if (index < messages.length) {
+        const div = document.createElement('div');
+        div.textContent = messages[index];
+        term.appendChild(div);
+        term.scrollTop = term.scrollHeight;
+        index++;
+      }
+    }, 2500);
+
+    // Snowfall
+    const canvas = document.getElementById('snow');
+    const ctx = canvas.getContext('2d');
+    let snowflakes = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
     }
+
+    function createSnowflakes() {
+      snowflakes.push({
+        x: Math.random() * canvas.width,
+        y: 0,
+        radius: Math.random() * 3 + 1,
+        speedY: Math.random() * 1 + 0.5
+      });
+    }
+
+    function updateSnowflakes() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let i = 0; i < snowflakes.length; i++) {
+        let f = snowflakes[i];
+        f.y += f.speedY;
+        ctx.beginPath();
+        ctx.arc(f.x, f.y, f.radius, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+        ctx.fill();
+      }
+      snowflakes = snowflakes.filter(f => f.y < canvas.height);
+    }
+
+    function animateSnow() {
+      createSnowflakes();
+      updateSnowflakes();
+      requestAnimationFrame(animateSnow);
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+    animateSnow();
+
+    // Remove Loader When Page is Ready
+    window.addEventListener('load', () => {
+      const loader = document.getElementById('loader');
+      loader.style.opacity = '0';
+      setTimeout(() => loader.style.display = 'none', 500);
+    });
   </script>
 </body>
-</html>
-
-
+  </html>
